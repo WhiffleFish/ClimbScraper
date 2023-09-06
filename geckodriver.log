@@ -286,3 +286,15 @@ console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1
 1693974237850	Marionette	INFO	Listening on port 50574
 Read port: 50574
 1693974238011	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1693974571290	geckodriver	INFO	Listening on 127.0.0.1:51960
+1693974571312	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... e" "-headless" "-foreground" "-no-remote" "-profile" "/var/folders/3n/yqn87g896kg2zzfpydnwl9q00000gn/T/rust_mozprofileCpnelJ"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1693974571655	Marionette	INFO	Marionette enabled
+1693974571876	Marionette	INFO	Listening on port 51965
+Read port: 51965
+1693974572046	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+1693974573830	Marionette	INFO	Stopped listening on port 51965
+JavaScript error: resource://services-settings/Utils.sys.mjs, line 229: TypeError: NetworkError: Network request failed
