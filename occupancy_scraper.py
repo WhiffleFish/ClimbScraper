@@ -1,8 +1,14 @@
 import requests
 import re
 import datetime
+import os
 
 URL = 'https://portal.rockgympro.com/portal/public/415a34a23151c6546419c1415d122b61/occupancy?&iframeid=occupancyCounter&fId=1038'
+
+OCCUPANCY_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'occupancy.csv'
+)
 
 def get_occupancy():
     page = requests.get(URL)
@@ -18,7 +24,7 @@ def get_occupancy():
     else:
         return float('nan')
 
-def write_to_file(count, file='occupancy.csv'):
+def write_to_file(count, file=OCCUPANCY_FILE):
     with open(file, 'a') as file:
         file.write(', '.join([str(datetime.datetime.now()), str(count)])+'\n')
 
