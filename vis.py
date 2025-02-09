@@ -1,19 +1,10 @@
 import matplotlib.pyplot as plt
+from occupancy_scraper import OCCUPANCY_FILE, load_csv
 import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 import datetime
 import os
-
-OCCUPANCY_FILE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    'occupancy.csv'
-)
-
-def load_csv(path=OCCUPANCY_FILE):
-    df = pd.read_csv(path)
-    df['date'] = pd.to_datetime(df['date'])
-    return df
 
 def get_compressed_data():
     df = load_csv()

@@ -1,6 +1,7 @@
 import requests
 import re
 import datetime
+import pandas as pd
 import os
 
 URL = 'https://portal.rockgympro.com/portal/public/415a34a23151c6546419c1415d122b61/occupancy?&iframeid=occupancyCounter&fId=1038'
@@ -9,6 +10,11 @@ OCCUPANCY_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'occupancy.csv'
 )
+
+def load_csv(path=OCCUPANCY_FILE):
+    df = pd.read_csv(path)
+    df['date'] = pd.to_datetime(df['date'])
+    return df
 
 def get_occupancy():
     page = requests.get(URL)
