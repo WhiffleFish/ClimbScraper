@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from sklearn.gaussian_process.kernels import RBF
 import datetime
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 class CompressedOccupancy:
     def __init__(self, data):
@@ -52,6 +54,9 @@ def weighted_mean_std(xs, ws):
     xm = np.average(xs, weights=ws)
     return xm, np.sqrt(np.average((xs - xm)**2, weights=ws))
 
+def floats2dt(v, td, t0):
+    return t0 + v * td
+
 class OccupancyPredictor:
     def __init__(self, data, gamma=0.05):
         self.data = data
@@ -75,6 +80,26 @@ class OccupancyPredictor:
 
     def __call__(self, hour, min):
         pass
+
+    def plot(self, xs=np.linspace(0, 1, 50), z=1):
+        dts = time2datetime(self.data.times)
+        t0 = dts[0]
+        td = (dts[-1] - dts[0])
+        xs_dt = floats2dt(xs, td, t0)
+        xm, xstd = self.pred_from_normtimes(xs)
+        fig, ax = plt.subplots(1, 1)
+        ax.scatter(floats2dt(self.data.X, td, t0), self.data.y)
+        ax.plot(xs_dt, xm)
+        ax.fill_between(
+            xs_dt,
+            xm - z * xstd,
+            xm + z * xstd,
+            alpha = 0.5,
+        )
+        ax.set_ylim(bottom=0)
+        fig.axes[0].xaxis.set_major_formatter(mdates.DateFormatter('%H'))
+        return fig, ax
+
 
 
 if __name__ == '__main__':
