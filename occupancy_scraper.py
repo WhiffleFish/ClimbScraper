@@ -11,9 +11,16 @@ OCCUPANCY_FILE = os.path.join(
     'occupancy.csv'
 )
 
-def load_csv(path=OCCUPANCY_FILE):
+def load_csv(path=OCCUPANCY_FILE, when='all'):
+    assert when in ['all', 'weekday', 'weekend']
+
     df = pd.read_csv(path)
     df['date'] = pd.to_datetime(df['date'])
+    if when == 'weekday':
+        df = df[df['date'].dt.dayofweek < 5]
+    elif when == 'weekend':
+        df = df[df['date'].dt.dayofweek > 4]
+
     return df
 
 def get_occupancy():

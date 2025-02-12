@@ -10,7 +10,8 @@ class CompressedOccupancy:
         pass
 
 class FlattenedOccupancy:
-    def __init__(self, df=load_csv()):
+    def __init__(self, when='weekday'):
+        df = load_csv(when=when)
         unsorted_times = np.array(dropdates(df['date']))
         times, counts = sortboth(unsorted_times, df['amount'].to_numpy())
         self.times = times
