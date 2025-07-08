@@ -1,5 +1,5 @@
-from vis import get_compressed_data
-from occupancy_scraper import load_csv
+from SpotOccupancy.vis import get_compressed_data
+from SpotOccupancy.occupancy_scraper import load_csv
 import numpy as np
 import pandas as pd
 from sklearn.gaussian_process.kernels import RBF
@@ -81,14 +81,14 @@ class OccupancyPredictor:
     def __call__(self, hour, min):
         pass
 
-    def plot(self, xs=np.linspace(0, 1, 50), z=1):
+    def plot(self, xs=np.linspace(0, 1, 50), z=1, markeralpha=0.5):
         dts = time2datetime(self.data.times)
         t0 = dts[0]
         td = (dts[-1] - dts[0])
         xs_dt = floats2dt(xs, td, t0)
         xm, xstd = self.pred_from_normtimes(xs)
         fig, ax = plt.subplots(1, 1)
-        ax.scatter(floats2dt(self.data.X, td, t0), self.data.y)
+        ax.scatter(floats2dt(self.data.X, td, t0), self.data.y, alpha=markeralpha)
         ax.plot(xs_dt, xm)
         ax.fill_between(
             xs_dt,

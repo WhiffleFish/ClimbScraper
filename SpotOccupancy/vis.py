@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from occupancy_scraper import OCCUPANCY_FILE, load_csv
+from SpotOccupancy.occupancy_scraper import OCCUPANCY_FILE, load_csv
 import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
