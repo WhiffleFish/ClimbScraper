@@ -14,8 +14,9 @@ OCCUPANCY_FILE = os.path.join(
 def load_csv(path=OCCUPANCY_FILE, when='all'):
     assert when in ['all', 'weekday', 'weekend']
 
-    df = pd.read_csv(path)
+    df = pd.read_csv(path,na_values=[' nan'])
     df['date'] = pd.to_datetime(df['date'])
+    df.dropna(inplace=True)
     if when == 'weekday':
         df = df[df['date'].dt.dayofweek < 5]
     elif when == 'weekend':
@@ -26,7 +27,7 @@ def load_csv(path=OCCUPANCY_FILE, when='all'):
 def get_occupancy():
     page = requests.get(URL)
     content = page.content.decode()
-    s = r"'BLD'.* \n\s*'capacity'.*\n\s*'count' : \d{1,3}"
+    s = r"'BLD'.* \s*'capacity'.*\s*'count' : \d{1,3}"
     re_match = re.search(s, content)
     if re_match:
         count_match = re.search(
