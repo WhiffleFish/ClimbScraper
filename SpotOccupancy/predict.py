@@ -1,11 +1,23 @@
-from SpotOccupancy.vis import get_compressed_data
-from SpotOccupancy.occupancy_scraper import load_csv
+from SpotOccupancy.occupancy_scraper import OCCUPANCY_FILE
 import numpy as np
 import pandas as pd
 from sklearn.gaussian_process.kernels import RBF
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+
+def load_csv(path=OCCUPANCY_FILE, when='all'):
+    assert when in ['all', 'weekday', 'weekend']
+
+    df = pd.read_csv(path,na_values=[' nan'])
+    df['date'] = pd.to_datetime(df['date'])
+    df.dropna(inplace=True)
+    if when == 'weekday':
+        df = df[df['date'].dt.dayofweek < 5]
+    elif when == 'weekend':
+        df = df[df['date'].dt.dayofweek > 4]
+
+    return df
 
 class CompressedOccupancy:
     def __init__(self, data):
